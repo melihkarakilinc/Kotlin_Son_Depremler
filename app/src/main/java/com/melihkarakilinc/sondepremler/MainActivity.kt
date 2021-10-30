@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel:MainViewModel
-    lateinit var list:List<DepremInf>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,15 +18,12 @@ class MainActivity : AppCompatActivity() {
             this
         ).get(MainViewModel::class.java)
 
+        viewModel.getDeprem()
 
         viewModel.DepremLiveData.observe(this, Observer { depremlist->
 
-            //list=depremlist
             Log.e("DepremList",depremlist.toString())
         })
-
-        viewModel.getDeprem()
-
 
     }
 }
