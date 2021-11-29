@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
 
-    var mainRepository:MainRepository= MainRepository()
+    var mainRepository: MainRepository = MainRepository()
     var DepremLiveData = MutableLiveData<DepremInf>()
-    fun getDeprem(): DepremInf? {
-        DepremLiveData= mainRepository.getDepremRepository()
-        return DepremLiveData.value
+
+    fun getDeprem() {
+        DepremLiveData = mainRepository.getDepremRepository()
     }
 }

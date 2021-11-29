@@ -1,37 +1,33 @@
 package com.melihkarakilinc.sondepremler
 
 import androidx.lifecycle.MutableLiveData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.*
 
 class MainRepository {
 
+
+    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        onError("Exception handled: ${throwable.localizedMessage}")
+    }
+
+    private fun onError(message: String): MutableLiveData<String> {
+        val error = MutableLiveData<String>()
+        error.value = message
+        return error
+    }
+
     fun getDepremRepository(): MutableLiveData<DepremInf> {
-
-        val call = DepremApi.service.getDeprem()
-
-        var mldDepremInf = MutableLiveData<DepremInf>()
-
-        call.enqueue(object : Callback<DepremInf> {
-            override fun onResponse(
-                call: Call<DepremInf>,
-                response: Response<DepremInf>
-            ) {
-
-
+        val mldDepremInf = MutableLiveData<DepremInf>()
+        var job: Job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = DepremApi.service.getDeprem()
+            withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                   mldDepremInf.value  = response.body()!!
+                    mldDepremInf.value = response.body()!!
                 } else {
-
+                    onError("Error : ${response.message()} ")
                 }
             }
-
-            override fun onFailure(call: Call<DepremInf>, t: Throwable) {
-
-            }
-
-        })
+        }
         return mldDepremInf
     }
 }
