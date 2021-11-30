@@ -14,6 +14,7 @@ import com.melihkarakilinc.sondepremler.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
     lateinit var viewModel: MainViewModel
+    lateinit var depremlist:ArrayList<DepremInf>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +33,18 @@ class MainFragment : Fragment() {
 
         viewModel.getDeprem()
 
-        viewModel.DepremLiveData.observe(viewLifecycleOwner, Observer { depremlist ->
 
+
+        viewModel.DepremLiveData.observe(viewLifecycleOwner, Observer { depremlist ->
+            depremlist.addAll(depremlist)
+            //insertRoom(depremlist)
             Log.e("DepremList", depremlist.toString())
         })
+    }
+    fun insertRoom(depremInf: ArrayList<DepremInfItem>){
+        for (i in depremInf){
+            viewModel.insertData(i)
+            Log.e("INSERT",i.toString())
+        }
     }
 }
