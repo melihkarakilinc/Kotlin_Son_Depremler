@@ -1,4 +1,4 @@
-package com.melihkarakilinc.sondepremler
+package com.melihkarakilinc.sondepremler.View
 
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +8,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.melihkarakilinc.sondepremler.Adapter.DepremItemAdapter
+import com.melihkarakilinc.sondepremler.Model.DepremInf
+import com.melihkarakilinc.sondepremler.Network.ConnectionLiveData
+import com.melihkarakilinc.sondepremler.Network.isConnected
+import com.melihkarakilinc.sondepremler.ViewModel.MainViewModel
 import com.melihkarakilinc.sondepremler.databinding.FragmentMainBinding
 
 
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
     lateinit var viewModel: MainViewModel
-    lateinit var depremlist:ArrayList<DepremInf>
+    lateinit var depremArrayList:List<DepremInf>
     protected lateinit var connectionLiveData: ConnectionLiveData
+    //private val adapter = DepremItemAdapter(depremArrayList)
+    private var adapter=DepremItemAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +39,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rv.adapter = adapter
 
         viewModel = ViewModelProvider(
             this
@@ -44,10 +53,10 @@ class MainFragment : Fragment() {
         viewModel.getDeprem()
 
 
-
         viewModel.DepremLiveData.observe(viewLifecycleOwner, Observer { depremlist ->
-            depremlist.addAll(depremlist)
-            Log.e("DepremList", depremlist.toString())
+            depremArrayList=depremlist
+            adapter.depremFunList(depremlist)
+            Log.e("DepremList", depremArrayList.toString())
         })
     }
 }

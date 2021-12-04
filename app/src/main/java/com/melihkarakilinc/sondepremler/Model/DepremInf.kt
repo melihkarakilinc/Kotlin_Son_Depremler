@@ -1,6 +1,6 @@
-package com.melihkarakilinc.sondepremler
+package com.melihkarakilinc.sondepremler.Model
 
-data class DepremInfItem(
+data class DepremInf(
     val boylam: String,
     val derinlik: String,
     val enlem: String,

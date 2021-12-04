@@ -1,6 +1,7 @@
-package com.melihkarakilinc.sondepremler
+package com.melihkarakilinc.sondepremler.Repository
 
 import androidx.lifecycle.MutableLiveData
+import com.melihkarakilinc.sondepremler.Model.DepremInf
 import kotlinx.coroutines.*
 
 class MainRepository {
@@ -16,9 +17,9 @@ class MainRepository {
         return error
     }
 
-    fun getDepremRepository(): MutableLiveData<DepremInf> {
-        val mldDepremInf = MutableLiveData<DepremInf>()
-        var job: Job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+    fun getDepremRepository(): MutableLiveData<List<DepremInf>> {
+        val mldDepremInf = MutableLiveData<List<DepremInf>>()
+        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = DepremApi.service.getDeprem()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {

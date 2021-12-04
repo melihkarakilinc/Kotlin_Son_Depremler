@@ -1,6 +1,6 @@
-package com.melihkarakilinc.sondepremler
+package com.melihkarakilinc.sondepremler.Repository
 
-import retrofit2.Call
+import com.melihkarakilinc.sondepremler.Model.DepremInf
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -8,7 +8,7 @@ import retrofit2.http.GET
 
 interface DepremApi {
     @GET("api/pure_api.php")
-    suspend fun getDeprem(): Response<DepremInf>
+    suspend fun getDeprem(): Response<List<DepremInf>>
 
     companion object {
         val BASE_URL = "https://deprem.odabas.xyz/"

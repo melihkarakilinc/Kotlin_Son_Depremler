@@ -1,4 +1,4 @@
-package com.melihkarakilinc.sondepremler
+package com.melihkarakilinc.sondepremler.Network
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver

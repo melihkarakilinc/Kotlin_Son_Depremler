@@ -1,4 +1,4 @@
-package com.melihkarakilinc.sondepremler
+package com.melihkarakilinc.sondepremler.View
 
 import android.os.Bundle
 import android.view.LayoutInflater
