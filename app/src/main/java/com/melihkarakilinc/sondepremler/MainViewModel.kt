@@ -7,20 +7,13 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application){
 
-    private val depremDao = AppDatabase.getDatabase(application).depremDao()
-    private var repository: RoomRepository = RoomRepository(depremDao)
-    val getAllData: LiveData<List<DepremInfItem>> = repository.getAllData
-
-    fun insertData(depremInfItem: DepremInfItem) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.insertData(depremInfItem)
-        }
-    }
-
     var mainRepository: MainRepository = MainRepository()
     var DepremLiveData = MutableLiveData<DepremInf>()
+    var connectionLiveData = MutableLiveData<Boolean>()
 
     fun getDeprem() {
-        DepremLiveData = mainRepository.getDepremRepository()
+        if (connectionLiveData.value==true){
+            DepremLiveData = mainRepository.getDepremRepository()
+        }
     }
 }

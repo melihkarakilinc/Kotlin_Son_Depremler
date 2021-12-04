@@ -15,7 +15,12 @@ class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
     lateinit var viewModel: MainViewModel
     lateinit var depremlist:ArrayList<DepremInf>
+    protected lateinit var connectionLiveData: ConnectionLiveData
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        connectionLiveData = activity?.let { ConnectionLiveData(it.applicationContext) }!!
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,20 +36,18 @@ class MainFragment : Fragment() {
             this
         ).get(MainViewModel::class.java)
 
+        connectionLiveData.observe(viewLifecycleOwner) {
+            viewModel.connectionLiveData.value = it
+        }
+        viewModel.connectionLiveData.value = requireContext().isConnected
+
         viewModel.getDeprem()
 
 
 
         viewModel.DepremLiveData.observe(viewLifecycleOwner, Observer { depremlist ->
             depremlist.addAll(depremlist)
-            //insertRoom(depremlist)
             Log.e("DepremList", depremlist.toString())
         })
-    }
-    fun insertRoom(depremInf: ArrayList<DepremInfItem>){
-        for (i in depremInf){
-            viewModel.insertData(i)
-            Log.e("INSERT",i.toString())
-        }
     }
 }
