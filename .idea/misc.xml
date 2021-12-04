@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/drawable/card_background.xml" value="0.2203125" />
+        <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/action_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/deprem_item.xml" value="0.25" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/fragment_detail.xml" value="0.20416666666666666" />
