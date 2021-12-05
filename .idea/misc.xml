@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/drawable/card_background.xml" value="0.2203125" />
+        <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/drawable/map_cardview_bg.xml" value="0.2203125" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/action_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/deprem_item.xml" value="0.25" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/fragment_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/fragment_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Melih/AndroidStudioProjects/KotlinSonDepremler/app/src/main/res/layout/item_layout.xml" value="0.22" />
         <entry key="..\:/Users/Melih/AndroidStudioProjects/SonDepremler2/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
       </map>
     </option>
@@ -18,5 +20,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.2" />
+      </ProjectState>
+    </option>
   </component>
 </project>

@@ -12,9 +12,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.melihkarakilinc.sondepremler.Model.DepremInf
 import com.melihkarakilinc.sondepremler.databinding.DepremItemBinding
-
-
-
+import com.melihkarakilinc.sondepremler.databinding.ItemLayoutBinding
 
 
 class DepremItemAdapter() :
@@ -31,18 +29,18 @@ class DepremItemAdapter() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = DepremItemBinding.inflate(inflater)
+        val binding = ItemLayoutBinding.inflate(inflater)
         return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.txtSehir.text = itemList[position].yer
-        holder.binding.txtSiddet.text = itemList[position].siddet
-        holder.binding.txtTarih.text = itemList[position].tarih
-        holder.binding.mapView.onCreate(null)
-        holder.binding.mapView.getMapAsync(OnMapReadyCallback { googleMap ->
+        holder.binding.txtSehir2.text = itemList[position].yer
+        holder.binding.txtSiddet2.text = itemList[position].siddet
+        holder.binding.txtTarih2.text = itemList[position].tarih
+        holder.binding.mapView3.onCreate(null)
+        holder.binding.mapView3.getMapAsync(OnMapReadyCallback { googleMap ->
             var mMap = googleMap
             mMap.getUiSettings().setZoomControlsEnabled(true)
             val lat1 = itemList[position].enlem.toDouble()
@@ -51,12 +49,12 @@ class DepremItemAdapter() :
             mMap.addMarker(MarkerOptions().position(bord).title(itemList[position].yer))
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bord, 8F))
         })
-        holder.binding.mapView.postInvalidate()
+        holder.binding.mapView3.postInvalidate()
 
     }
 
 
-    inner class ViewHolder(val binding: DepremItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 }
