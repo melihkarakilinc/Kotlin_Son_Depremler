@@ -3,27 +3,27 @@ package com.melihkarakilinc.sondepremler.Adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.melihkarakilinc.sondepremler.ClickListener
 import com.melihkarakilinc.sondepremler.Model.DepremInf
-import com.melihkarakilinc.sondepremler.databinding.DepremItemBinding
 import com.melihkarakilinc.sondepremler.databinding.ItemLayoutBinding
 
 
 class DepremItemAdapter() :
     RecyclerView.Adapter<DepremItemAdapter.ViewHolder>() {
 
-    var itemList=mutableListOf<DepremInf>()
-    lateinit var onClickListener: View.OnClickListener
+    var itemList = mutableListOf<DepremInf>()
+    lateinit var itemListener: ClickListener
 
     @SuppressLint("NotifyDataSetChanged")
-    fun depremFunList(itemList: List<DepremInf>) {
+    fun depremFunList(itemList: List<DepremInf>, itemListener: ClickListener) {
         this.itemList = itemList.toMutableList()
+        this.itemListener = itemListener
         notifyDataSetChanged()
     }
 
@@ -41,7 +41,7 @@ class DepremItemAdapter() :
         holder.binding.txtTarih2.text = itemList[position].tarih
         holder.binding.mapView3.onCreate(null)
         holder.binding.mapView3.getMapAsync(OnMapReadyCallback { googleMap ->
-            var mMap = googleMap
+            val mMap = googleMap
             mMap.getUiSettings().setZoomControlsEnabled(true)
             val lat1 = itemList[position].enlem.toDouble()
             val lng1 = itemList[position].boylam.toDouble()
@@ -50,7 +50,9 @@ class DepremItemAdapter() :
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bord, 8F))
         })
         holder.binding.mapView3.postInvalidate()
-
+        holder.binding.cardViewItem.setOnClickListener {
+            itemListener.OnItemSelect(itemList[position])
+        }
     }
 
 

@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.melihkarakilinc.sondepremler.Adapter.DepremItemAdapter
+import com.melihkarakilinc.sondepremler.ClickListener
 import com.melihkarakilinc.sondepremler.Model.DepremInf
 import com.melihkarakilinc.sondepremler.Network.ConnectionLiveData
 import com.melihkarakilinc.sondepremler.Network.isConnected
@@ -16,7 +18,7 @@ import com.melihkarakilinc.sondepremler.ViewModel.MainViewModel
 import com.melihkarakilinc.sondepremler.databinding.FragmentMainBinding
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), ClickListener {
     lateinit var binding: FragmentMainBinding
     lateinit var viewModel: MainViewModel
     lateinit var depremArrayList:List<DepremInf>
@@ -55,8 +57,12 @@ class MainFragment : Fragment() {
 
         viewModel.DepremLiveData.observe(viewLifecycleOwner, Observer { depremlist ->
             depremArrayList=depremlist
-            adapter.depremFunList(depremlist)
+            adapter.depremFunList(depremlist,this)
             Log.e("DepremList", depremArrayList.toString())
         })
+    }
+
+    override fun OnItemSelect(depremInf: DepremInf) {
+        Toast.makeText(requireContext(),depremInf.yer,Toast.LENGTH_SHORT).show()
     }
 }
