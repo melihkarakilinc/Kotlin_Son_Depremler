@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.melihkarakilinc.sondepremler.Adapter.DepremItemAdapter
 import com.melihkarakilinc.sondepremler.ClickListener
 import com.melihkarakilinc.sondepremler.Model.DepremInf
-import com.melihkarakilinc.sondepremler.Network.ConnectionLiveData
-import com.melihkarakilinc.sondepremler.Network.isConnected
 import com.melihkarakilinc.sondepremler.ViewModel.MainViewModel
 import com.melihkarakilinc.sondepremler.databinding.FragmentMainBinding
 
@@ -22,14 +20,10 @@ class MainFragment : Fragment(), ClickListener {
     lateinit var binding: FragmentMainBinding
     lateinit var viewModel: MainViewModel
     lateinit var depremArrayList:List<DepremInf>
-    protected lateinit var connectionLiveData: ConnectionLiveData
-    //private val adapter = DepremItemAdapter(depremArrayList)
     private var adapter=DepremItemAdapter()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        connectionLiveData = activity?.let { ConnectionLiveData(it.applicationContext) }!!
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,13 +41,17 @@ class MainFragment : Fragment(), ClickListener {
             this
         ).get(MainViewModel::class.java)
 
-        connectionLiveData.observe(viewLifecycleOwner) {
-            viewModel.connectionLiveData.value = it
-        }
-        viewModel.connectionLiveData.value = requireContext().isConnected
 
         viewModel.getDeprem()
 
+        viewModel.progressLiveData.observe(viewLifecycleOwner, Observer { progressData->
+            if (progressData){
+                binding.progressBar.visibility=View.VISIBLE
+            }
+            else{
+                binding.progressBar.visibility=View.GONE
+            }
+        })
 
         viewModel.DepremLiveData.observe(viewLifecycleOwner, Observer { depremlist ->
             depremArrayList=depremlist
