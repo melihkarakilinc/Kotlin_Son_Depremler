@@ -9,8 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.melihkarakilinc.sondepremler.Adapter.DepremItemAdapter
-import com.melihkarakilinc.sondepremler.ClickListener
+import com.melihkarakilinc.sondepremler.Util.ClickListener
 import com.melihkarakilinc.sondepremler.Model.DepremInf
 import com.melihkarakilinc.sondepremler.ViewModel.MainViewModel
 import com.melihkarakilinc.sondepremler.databinding.FragmentMainBinding
@@ -61,6 +62,8 @@ class MainFragment : Fragment(), ClickListener {
     }
 
     override fun OnItemSelect(depremInf: DepremInf) {
-        Toast.makeText(requireContext(),depremInf.yer,Toast.LENGTH_SHORT).show()
+        val action =
+            MainFragmentDirections.actionMainFragmentToDetailFragment(depremInf)
+        findNavController().navigate(action)
     }
 }

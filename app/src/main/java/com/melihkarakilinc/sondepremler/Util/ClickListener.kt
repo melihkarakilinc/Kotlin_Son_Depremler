@@ -1,4 +1,4 @@
-package com.melihkarakilinc.sondepremler
+package com.melihkarakilinc.sondepremler.Util
 
 import com.melihkarakilinc.sondepremler.Model.DepremInf
 

@@ -18,5 +18,11 @@
         android:id="@+id/detailFragment"
         android:name="com.melihkarakilinc.sondepremler.View.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="depremItem"
+            app:argType="com.melihkarakilinc.sondepremler.Model.DepremInf"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

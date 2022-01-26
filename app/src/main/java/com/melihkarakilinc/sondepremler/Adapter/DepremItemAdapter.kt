@@ -9,7 +9,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.melihkarakilinc.sondepremler.ClickListener
+import com.melihkarakilinc.sondepremler.Util.ClickListener
 import com.melihkarakilinc.sondepremler.Model.DepremInf
 import com.melihkarakilinc.sondepremler.databinding.ItemLayoutBinding
 
