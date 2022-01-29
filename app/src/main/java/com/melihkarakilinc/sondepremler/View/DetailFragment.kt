@@ -12,20 +12,29 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.melihkarakilinc.sondepremler.Model.DepremInf
 import com.melihkarakilinc.sondepremler.databinding.FragmentDetailBinding
 
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), OnMapReadyCallback {
 
-    lateinit var binding: FragmentDetailBinding
+    private lateinit var binding: FragmentDetailBinding
     private val args: DetailFragmentArgs by navArgs()
     private lateinit var depremItem: DepremInf
+    private lateinit var mMap: GoogleMap
+    var enlem: Double = 0.0
+    var boylam: Double = 0.0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,7 +42,27 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         depremItem = args.depremItem!!
-        //Toast.makeText(requireContext(), depremItem.toString(), Toast.LENGTH_SHORT).show()
+
+        with(binding) {
+            txtTarihMap.setText(depremItem.tarih)
+            txtSaatMap.setText(depremItem.saat)
+            txtDerinlikMap.setText(depremItem.derinlik)
+            txtSiddetMap.setText(depremItem.siddet)
+            txtYerMap.setText(depremItem.yer)
+            txtTipMap.setText(depremItem.tip)
+        }
+
+        binding.detailMap.onCreate(null)
+        binding.detailMap.getMapAsync(OnMapReadyCallback { googleMap ->
+            val mMap = googleMap
+            mMap.getUiSettings().setZoomControlsEnabled(true)
+            val lat1 = depremItem.enlem.toDouble()
+            val lng1 = depremItem.boylam.toDouble()
+            val bord = LatLng(lat1, lng1)
+            mMap.addMarker(MarkerOptions().position(bord).title(depremItem.yer))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bord, 8F))
+        })
+        binding.detailMap.postInvalidate()
 
         binding.imgExpand.setOnClickListener {
             if (!binding.mainCard.isVisible) {
@@ -49,10 +78,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun hideSubtitle() {
-        //yazı alanının kullandığı yükselik değerini alalım
-        var subtitleHeight = binding.mainCard.height
-        //makale de bu bölümün açıklamasını bulabilirsiniz
-        var heightAnimator = ValueAnimator.ofInt(subtitleHeight, 0)
+
+        val subtitleHeight = binding.mainCard.height
+        val heightAnimator = ValueAnimator.ofInt(subtitleHeight, 0)
 
         heightAnimator.addUpdateListener {
             binding.mainCard.updateHeight(it.animatedValue as Int)
@@ -65,7 +93,6 @@ class DetailFragment : Fragment() {
 
     private fun showSubtitle() {
         binding.mainCard.updateHeight(ConstraintLayout.LayoutParams.WRAP_CONTENT)
-        //View measure metodu sayesinde tvSubtitle adlı Textview'in yükseklik değeri buluyoruz
         val totalMarginForSubtitle = 2 * 16.toPx()
         binding.mainCard.measure(
             View.MeasureSpec.makeMeasureSpec(
@@ -74,14 +101,12 @@ class DetailFragment : Fragment() {
             ),
             View.MeasureSpec.UNSPECIFIED
         )
-
         val subtitleHeight = binding.mainCard.measuredHeight
         //binding.mainCard.height = 0
         binding.mainCard.isVisible = true
-        //Textviewdeki içerik animasyonlu görünür hale getiriyoruz
         val heightAnimator = ValueAnimator.ofInt(0, subtitleHeight)
         heightAnimator.addUpdateListener {
-            // tvSubtitle.height = it.animatedValue as Int
+            //tvSubtitle.height = it.animatedValue as Int
         }
         heightAnimator.start()
     }
@@ -97,4 +122,8 @@ class DetailFragment : Fragment() {
         this.toFloat(),
         Resources.getSystem().displayMetrics
     ).toInt()
+
+    override fun onMapReady(p0: GoogleMap) {
+        TODO("Not yet implemented")
+    }
 }
